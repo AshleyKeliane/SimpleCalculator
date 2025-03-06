@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+<head>
+    <title>Calculator</title>
+    <meta charset="UTF-8">
+    
+    <style>
+        /* Styling w css */
+        .calculator-container {
+          
+            margin: 50px auto; 
+            width: 300px;  
+            text-align: center; 
+            border: 2px solid #ccc; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.25);
+        }
+
+
+        #screen {
+            width: 100%;
+            text-align: right;
+            padding: 4px;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        /* spacing the buttons a bit */
+        button {
+            margin: 5px;
+            width: 50px;
+            height: 40px;
+            font-size: 1em;
+        }
+    </style>
+    <script>
+        // Append a digit to screen
+        function addDigit(digit) {
+            document.getElementById('screen').value += digit;
+        }
+
+        // When user clicks an operator
+        // 1) Store the first number
+        // 2) Store the chosen operator
+        // 3) Clear the screen for second number
+        function setOperator(op) {
+            // Put first number from screen into hidden input
+            document.getElementById('num1').value = document.getElementById('screen').value;
+            // Put operator in hidden input
+            document.getElementById('operation').value = op;
+            // Clear the screen
+            document.getElementById('screen').value = '';
+        }
+
+        // User clicked '=' => store second number, submit the form
+        function calculate() {
+            document.getElementById('num2').value = document.getElementById('screen').value;
+            document.getElementById('calcForm').submit();
+        }
+
+        // Optional: Clear the screen if you want a "C" (clear) button
+        function clearScreen() {
+            document.getElementById('screen').value = '';
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculator </h1>
+    <form action="calcul" method="post" id="calcForm">
+        <!-- Hidden fields that will be sent to the servlet -->
+        <input type="hidden" name="num1" id="num1" />
+        <input type="hidden" name="num2" id="num2" />
+        <input type="hidden" name="operation" id="operation" />
+
+        <!-- A read-only screen displaying what the user typed -->
+        <input type="text" id="screen" value="" readonly style="width: 150px; text-align: right;" /><br><br>
+
+    
+        <button type="button" onclick="addDigit('7')">7</button>
+        <button type="button" onclick="addDigit('8')">8</button>
+        <button type="button" onclick="addDigit('9')">9</button>
+        <br>
+        <button type="button" onclick="addDigit('4')">4</button>
+        <button type="button" onclick="addDigit('5')">5</button>
+        <button type="button" onclick="addDigit('6')">6</button>
+        <br>
+        <button type="button" onclick="addDigit('1')">1</button>
+        <button type="button" onclick="addDigit('2')">2</button>
+        <button type="button" onclick="addDigit('3')">3</button>
+        <br>
+        <button type="button" onclick="addDigit('0')">0</button>
+        <button type="button" onclick="addDigit('.')"> . </button>
+        <button type="button" onclick="clearScreen()">C</button>
+        <br><br>
+        
+
+        <button type="button" onclick="setOperator('+')">+</button>
+        <button type="button" onclick="setOperator('-')">-</button>
+        <button type="button" onclick="setOperator('*')">*</button>
+        <button type="button" onclick="setOperator('/')">/</button>
+        <br><br>
+
+        <!-- Equals button => submit to servlet -->
+        <button type="button" onclick="calculate()">=</button>
+
+    </form>
+</body>
+</html>
